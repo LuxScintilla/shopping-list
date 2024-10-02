@@ -1,0 +1,190 @@
+:root {
+  --main-bg-color: #16191f;
+  --light-bg-color: #23262c;
+  --accent-color: #76abae;
+  --white-color: #eeeeee;
+
+  --effect-color-1: #d477ff;
+  --effect-color-2: #83ffc5;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.6rem;
+  color: var(--white-color);
+  background-color: var(--main-bg-color);
+}
+
+/* -------- General Styles -------- */
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.inner-container {
+  background-color: rgba(35, 38, 44, 0.8);
+  padding: 2.4rem;
+  border-radius: 16px;
+  backdrop-filter: blur(48px);
+  -webkit-backdrop-filter: blur(48px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.outer-container {
+  position: relative;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.outer-container:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  background-color: var(--effect-color-2);
+  animation: 12s infinite alternate green-blur;
+}
+
+.outer-container:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  right: 0;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  background-color: var(--effect-color-1);
+  animation: 12s infinite alternate purple-blur;
+}
+
+/* -------- Animations -------- */
+
+@keyframes green-blur {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  25% {
+    top: 40%;
+    left: 60%;
+  }
+  50% {
+    top: 75%;
+    left: 80%;
+  }
+  75% {
+    top: 20%;
+    left: 20%;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+@keyframes purple-blur {
+  0% {
+    bottom: 0;
+    right: 0;
+  }
+  25% {
+    bottom: 15%;
+    right: 30%;
+  }
+  50% {
+    bottom: 50%;
+    right: 75%;
+  }
+  75% {
+    bottom: 20%;
+    right: 40%;
+  }
+  100% {
+    bottom: 0;
+    right: 0;
+  }
+}
+
+/* -------- Header Styles -------- */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 4.8rem;
+}
+
+.icon {
+  font-size: 2.4rem;
+}
+
+.title {
+  font-size: 3.2rem;
+}
+
+/* -------- List Input Styles -------- */
+
+.item-label {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.item-input {
+  all: unset;
+  height: 4.8rem;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: var(--white-color);
+  margin-bottom: 1.6rem;
+}
+
+.item-submit {
+  all: unset;
+  height: 4.8rem;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 0 1.6rem;
+  background-color: var(--accent-color);
+}
+
+/* -------- List Filter Styles -------- */
+
+.filter-item {
+  all: unset;
+  height: 4.8rem;
+  width: 100%;
+  border-bottom: 1px solid var(--white-color);
+  margin-bottom: 4.8rem;
+}
+
+/* -------- List Items Styles -------- */
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--white-color);
+  border-radius: 8px;
+  padding: 0.8rem;
+}

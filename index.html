@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      defer
+      src="https://kit.fontawesome.com/9393d0e112.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Shopping List | Ekaterina Furman</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="outer-container">
+        <div class="inner-container">
+          <div class="header">
+            <div class="icon"><i class="fa-solid fa-list-check"></i></div>
+            <h1 class="title">Shopping List</h1>
+          </div>
+          <div class="main-content">
+            <form class="list-form">
+              <label for="shopping-item" class="item-label"
+                >Add new Item:</label
+              >
+              <input id="shopping-item" type="text" class="item-input" />
+              <button class="item-submit">Add Item</button>
+            </form>
+
+            <form class="filter-form">
+              <input
+                id="filter-item"
+                type="text"
+                class="filter-item"
+                placeholder="Filter your list"
+              />
+            </form>
+
+            <ul class="list">
+              <li class="list-item">
+                <div class="list-content">
+                  <p class="grocery-item">Milk</p>
+                </div>
+                <div class="delete-item"><i class="fa-solid fa-xmark"></i></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
