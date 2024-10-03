@@ -27,6 +27,12 @@ body {
   background-color: var(--main-bg-color);
 }
 
+/* -------- Hidden Styles -------- */
+
+.hidden {
+  display: none;
+}
+
 /* -------- General Styles -------- */
 
 .main {
@@ -151,12 +157,21 @@ body {
 
 /* -------- List Input Styles -------- */
 
+.list-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+}
+
 .item-label {
-  display: block;
+  grid-column: 1 / 3;
+  grid-row: 1;
   margin-bottom: 0.8rem;
 }
 
 .item-input {
+  grid-column: 1;
+  grid-row: 2;
   all: unset;
   height: 4.8rem;
   border-top-left-radius: 8px;
@@ -168,7 +183,10 @@ body {
 }
 
 .item-submit {
+  grid-column: 2;
+  grid-row: 2;
   all: unset;
+  text-align: center;
   height: 4.8rem;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -181,22 +199,31 @@ body {
 .item-submit:hover,
 .item-submit:active {
   background-color: #9a62b4;
-  transform: scale(1.1);
 }
 
 /* -------- List Filter Styles -------- */
 
 .filter-item {
-  all: unset;
+  font: inherit;
+  color: var(--white-color);
+  border: none;
+  background-color: transparent;
   height: 4.8rem;
   width: 100%;
   border-bottom: 1px solid var(--white-color);
   margin-bottom: 4.8rem;
 }
 
+.filter-item:focus {
+  outline: none;
+}
+
 /* -------- List Items Styles -------- */
 
 .list {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 4.8rem;
 }
 
@@ -204,10 +231,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.6rem;
   border: 1px solid var(--white-color);
   border-radius: 8px;
   padding: 0.8rem;
   margin-bottom: 1.6rem;
+  transition: all 0.2s ease-in;
+}
+
+.list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .delete-item {
@@ -226,8 +259,10 @@ body {
 /* -------- Clear Button Styles -------- */
 
 .item-clear {
-  all: unset;
+  font: inherit;
+  color: var(--white-color);
   text-align: center;
+  border: none;
   height: 4.8rem;
   border-radius: 8px;
   padding: 0 1.6rem;
@@ -239,5 +274,4 @@ body {
 .item-clear:hover,
 .item-clear:active {
   background-color: #9a62b4;
-  transform: scale(1.1);
 }
