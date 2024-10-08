@@ -4,11 +4,10 @@ const list = document.querySelector(".list");
 const clearButton = document.querySelector(".item-clear");
 const filter = document.querySelector(".filter-item");
 
-function addToList(e) {
+function checkAndSubmit(e) {
   e.preventDefault();
 
   const item = itemInput.value;
-
   if (item === "") {
     alert(
       "You left the field empty. Please type in your grocery item before pressing the Add button."
@@ -16,10 +15,51 @@ function addToList(e) {
     return;
   }
 
-  createItem(item);
-  toggleUI();
+  addToStorage(item);
+  addToDOM(item);
+}
 
+function addToDOM(item) {
+  createFromStorage();
+  toggleUI();
   itemInput.value = "";
+}
+
+function addToStorage(item) {
+  let itemArray;
+  if (localStorage.getItem("groceries") === null) {
+    itemArray = [];
+  } else {
+    itemArray = JSON.parse(localStorage.getItem("groceries"));
+  }
+  itemArray.push(item);
+  localStorage.setItem("groceries", JSON.stringify(itemArray));
+}
+
+function createFromStorage() {
+  let itemArray;
+  if (localStorage.getItem("groceries") === null) {
+    itemArray = [];
+  } else {
+    itemArray = JSON.parse(localStorage.getItem("groceries"));
+  }
+
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
+
+  itemArray.forEach((item) => createItem(item));
+}
+
+function removeFromStorage(deletedItem) {
+  let itemArray;
+  if (localStorage.getItem("groceries") === null) {
+    itemArray = [];
+  } else {
+    itemArray = JSON.parse(localStorage.getItem("groceries"));
+  }
+  itemArray = itemArray.filter((item) => item !== deletedItem);
+  localStorage.setItem("groceries", JSON.stringify(itemArray));
 }
 
 function createItem(item) {
@@ -45,13 +85,14 @@ function createItem(item) {
 }
 
 function deleteItem() {
-  this.parentElement.remove();
+  removeFromStorage(this.parentElement.querySelector("p").textContent);
+  createFromStorage();
   toggleUI();
 }
 
 function clearAll() {
-  const items = list.querySelectorAll("li");
-  items.forEach((item) => item.remove());
+  localStorage.clear();
+  createFromStorage();
   toggleUI();
 }
 
@@ -81,8 +122,9 @@ function filterItems(e) {
   });
 }
 
-submitButton.addEventListener("click", addToList);
+submitButton.addEventListener("click", checkAndSubmit);
 clearButton.addEventListener("click", clearAll);
 filter.addEventListener("input", filterItems);
 
+createFromStorage();
 toggleUI();
