@@ -36,6 +36,23 @@ function addToStorage(item) {
   localStorage.setItem("groceries", JSON.stringify(itemArray));
 }
 
+function editStorage(newText, originalText) {
+  let itemArray;
+  if (localStorage.getItem("groceries") === null) {
+    itemArray = [];
+  } else {
+    itemArray = JSON.parse(localStorage.getItem("groceries"));
+  }
+  const updatedArray = itemArray.map((item) => {
+    if (item === originalText) {
+      return newText;
+    } else {
+      return item;
+    }
+  });
+  localStorage.setItem("groceries", JSON.stringify(updatedArray));
+}
+
 function createFromStorage() {
   let itemArray;
   if (localStorage.getItem("groceries") === null) {
@@ -65,13 +82,23 @@ function removeFromStorage(deletedItem) {
 function createItem(item) {
   const li = document.createElement("li");
   li.classList.add("list-item");
+  if (item.length >= 16) {
+    li.classList.add("long-item");
+  }
 
   const contentDiv = document.createElement("div");
   contentDiv.classList.add("list-content");
 
+  const buttonDiv = document.createElement("div");
+
   const groceryItem = document.createElement("p");
   groceryItem.classList.add("grocery-item");
   groceryItem.textContent = item;
+
+  const editButton = document.createElement("button");
+  editButton.classList.add("edit-item");
+  editButton.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`;
+  editButton.addEventListener("click", editItem);
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-item");
@@ -80,8 +107,51 @@ function createItem(item) {
 
   contentDiv.appendChild(groceryItem);
   li.appendChild(contentDiv);
-  li.appendChild(deleteButton);
+  buttonDiv.appendChild(editButton);
+  buttonDiv.appendChild(deleteButton);
+  li.appendChild(buttonDiv);
   list.appendChild(li);
+}
+
+function createEditMode(element, text) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+  const inputEdit = document.createElement("input");
+  inputEdit.value = text;
+  inputEdit.setAttribute("type", "text");
+  inputEdit.classList.add("item-edit-mode");
+
+  const submitEdit = document.createElement("button");
+  submitEdit.classList.add("submit-edit");
+  submitEdit.innerHTML = `<i class="fa-solid fa-check"></i>`;
+  submitEdit.addEventListener("click", function () {
+    submitEditItem(element, text);
+  });
+
+  element.appendChild(inputEdit);
+  element.appendChild(submitEdit);
+}
+
+function editItem(e) {
+  const li = e.target.parentElement.parentElement.parentElement;
+  const text = li.querySelector("p").textContent;
+  createEditMode(li, text);
+}
+
+function submitEditItem(element, originalText) {
+  const newText = element.querySelector("input");
+
+  if (newText.value === "") {
+    alert(
+      "You left the field empty. Please type in your grocery item before pressing the Edit button."
+    );
+    return;
+  }
+
+  editStorage(newText.value, originalText);
+  createFromStorage();
 }
 
 function deleteItem() {
