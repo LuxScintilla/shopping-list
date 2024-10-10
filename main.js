@@ -25,24 +25,34 @@ function addToDOM(item) {
   itemInput.value = "";
 }
 
-function addToStorage(item) {
+function getFromStorage() {
   let itemArray;
   if (localStorage.getItem("groceries") === null) {
     itemArray = [];
   } else {
     itemArray = JSON.parse(localStorage.getItem("groceries"));
   }
-  itemArray.push(item);
-  localStorage.setItem("groceries", JSON.stringify(itemArray));
+  return itemArray;
+}
+
+function checkDuplicate(item) {
+  const itemArray = getFromStorage();
+  return itemArray.includes(item);
+}
+
+function addToStorage(item) {
+  const itemArray = getFromStorage();
+
+  if (checkDuplicate(item)) {
+    alert("You already have this item in your list!");
+  } else {
+    itemArray.push(item);
+    localStorage.setItem("groceries", JSON.stringify(itemArray));
+  }
 }
 
 function editStorage(newText, originalText) {
-  let itemArray;
-  if (localStorage.getItem("groceries") === null) {
-    itemArray = [];
-  } else {
-    itemArray = JSON.parse(localStorage.getItem("groceries"));
-  }
+  const itemArray = getFromStorage();
   const updatedArray = itemArray.map((item) => {
     if (item === originalText) {
       return newText;
@@ -50,16 +60,16 @@ function editStorage(newText, originalText) {
       return item;
     }
   });
-  localStorage.setItem("groceries", JSON.stringify(updatedArray));
+
+  if (checkDuplicate(newText)) {
+    alert("You already have this item in your list!");
+  } else {
+    localStorage.setItem("groceries", JSON.stringify(updatedArray));
+  }
 }
 
 function createFromStorage() {
-  let itemArray;
-  if (localStorage.getItem("groceries") === null) {
-    itemArray = [];
-  } else {
-    itemArray = JSON.parse(localStorage.getItem("groceries"));
-  }
+  const itemArray = getFromStorage();
 
   while (list.firstChild) {
     list.removeChild(list.firstChild);
@@ -69,14 +79,9 @@ function createFromStorage() {
 }
 
 function removeFromStorage(deletedItem) {
-  let itemArray;
-  if (localStorage.getItem("groceries") === null) {
-    itemArray = [];
-  } else {
-    itemArray = JSON.parse(localStorage.getItem("groceries"));
-  }
-  itemArray = itemArray.filter((item) => item !== deletedItem);
-  localStorage.setItem("groceries", JSON.stringify(itemArray));
+  const itemArray = getFromStorage();
+  const filteredArray = itemArray.filter((item) => item !== deletedItem);
+  localStorage.setItem("groceries", JSON.stringify(filteredArray));
 }
 
 function createItem(item) {
@@ -155,7 +160,9 @@ function submitEditItem(element, originalText) {
 }
 
 function deleteItem() {
-  removeFromStorage(this.parentElement.querySelector("p").textContent);
+  removeFromStorage(
+    this.parentElement.parentElement.querySelector("p").textContent
+  );
   createFromStorage();
   toggleUI();
 }
