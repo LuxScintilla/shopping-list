@@ -123,10 +123,21 @@ function createEditMode(element, text) {
     element.removeChild(element.firstChild);
   }
 
+  const buttonDiv = document.createElement("div");
+
   const inputEdit = document.createElement("input");
   inputEdit.value = text;
   inputEdit.setAttribute("type", "text");
+  inputEdit.setAttribute("autofocus", "true");
   inputEdit.classList.add("item-edit-mode");
+  inputEdit.style.width = text.length + "ch";
+  inputEdit.addEventListener("input", function () {
+    if (this.value.length <= 20) {
+      inputEdit.style.width = this.value.length + "ch";
+    } else {
+      inputEdit.style.width = "20ch";
+    }
+  });
 
   const submitEdit = document.createElement("button");
   submitEdit.classList.add("submit-edit");
@@ -135,8 +146,15 @@ function createEditMode(element, text) {
     submitEditItem(element, text);
   });
 
+  const cancelEdit = document.createElement("button");
+  cancelEdit.classList.add("cancel-edit");
+  cancelEdit.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`;
+  cancelEdit.addEventListener("click", createFromStorage);
+
+  buttonDiv.appendChild(submitEdit);
+  buttonDiv.appendChild(cancelEdit);
   element.appendChild(inputEdit);
-  element.appendChild(submitEdit);
+  element.appendChild(buttonDiv);
 }
 
 function editItem(e) {

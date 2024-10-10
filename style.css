@@ -298,6 +298,20 @@ body {
   transform: scale(1.2);
 }
 
+.cancel-edit {
+  all: unset;
+  color: rgb(196, 73, 73);
+  cursor: pointer;
+  margin-left: 1.2rem;
+  transition: all 0.2s ease-in;
+}
+
+.cancel-edit:hover,
+.cancel-edit:active {
+  color: rgb(199, 34, 34);
+  transform: scale(1.2);
+}
+
 /* -------- Clear Button Styles -------- */
 
 .item-clear {
